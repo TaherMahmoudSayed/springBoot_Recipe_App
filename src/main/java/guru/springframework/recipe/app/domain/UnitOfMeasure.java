@@ -1,6 +1,11 @@
 package guru.springframework.recipe.app.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
+
+@Data
+@EqualsAndHashCode(exclude = {"ingredient"})
 
 @Entity
 public class UnitOfMeasure {

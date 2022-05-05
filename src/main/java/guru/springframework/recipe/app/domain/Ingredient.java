@@ -1,7 +1,12 @@
 package guru.springframework.recipe.app.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+
+@Data
+@EqualsAndHashCode(exclude = {"recipe","amount","unitOfMeasure"})
 
 @Entity
 public class Ingredient {
@@ -15,5 +20,13 @@ public class Ingredient {
     @OneToOne
     private UnitOfMeasure unitOfMeasure;
 
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure) {
+        this.description = description;
+        this.amount = amount;
+        this.unitOfMeasure = unitOfMeasure;
+    }
+
+    public Ingredient() {
+    }
 
 }
