@@ -1,17 +1,19 @@
 package guru.springframework.recipe.app.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode(exclude = {"ingredients","categories","note"})
-
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"ingredients", "categories", "note"})
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,22 +35,24 @@ public class Recipe {
     private Note note;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     //here we used cascade and mappedBy with Recipe because recipe owns the ingredients not the opposite
-    private Set<Ingredient> ingredients= new HashSet<>();
+    private final Set<Ingredient> ingredients = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories=new HashSet<>();
+    private final Set<Category> categories = new HashSet<>();
 
 
     public void setNote(Note note) {
         this.note = note;
         this.note.setRecipe(this);
     }
-    public void addIngredient(Ingredient ingredient){
+
+    public void addIngredient(Ingredient ingredient) {
         ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
+
     }
 
 
-   }
+}

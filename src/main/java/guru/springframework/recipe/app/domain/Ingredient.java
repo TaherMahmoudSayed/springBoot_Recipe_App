@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(exclude = {"recipe","amount","unitOfMeasure"})
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +27,9 @@ public class Ingredient {
         this.description = description;
         this.amount = amount;
         this.unitOfMeasure = unitOfMeasure;
+
     }
 
-    public Ingredient() {
-    }
+
 
 }

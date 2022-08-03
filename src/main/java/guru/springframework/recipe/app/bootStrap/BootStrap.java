@@ -94,6 +94,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>  {
 
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
+        guacRecipe.setSource("Wiki");
+        guacRecipe.setUrl("wwww.guacRecipe.com");
         recipes.add(guacRecipe);
 
         Recipe tacosRecipe = new Recipe();
@@ -124,7 +126,7 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>  {
                 "\n" +
                 "\n" +
                 "Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4jvu7Q0MJ");
-        tacoNote.setRecipe(tacosRecipe);
+
         tacosRecipe.setNote(tacoNote);
 
         tacosRecipe.addIngredient(new Ingredient("Ancho Chili Powder", new BigDecimal(2), tableSpoonUom));
@@ -149,7 +151,8 @@ public class BootStrap implements ApplicationListener<ContextRefreshedEvent>  {
 
         tacosRecipe.getCategories().add(americanCategory);
         tacosRecipe.getCategories().add(mexicanCategory);
-
+        tacosRecipe.setSource("Wiki");
+        tacosRecipe.setUrl("wwww.tacosRecipe.com");
         recipes.add(tacosRecipe);
 
         return recipes;
