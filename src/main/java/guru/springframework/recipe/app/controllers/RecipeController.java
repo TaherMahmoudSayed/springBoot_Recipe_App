@@ -25,10 +25,13 @@ public class RecipeController {
 
     @RequestMapping("/{id}/show")
     public String ShowRecipe(@PathVariable Long id,Model model ){
-        Optional<Recipe> recipe=recipeService.findById(id);
-        model.addAttribute("recipe",recipe.get());
 
-        return "recipe/show";
+            Optional<Recipe> recipe=recipeService.findById(id);
+            model.addAttribute("recipe",recipe.get());
+
+            return "recipe/show";
+
+
     }
     @GetMapping
     @RequestMapping("/add")
@@ -65,6 +68,7 @@ public class RecipeController {
         model.addAttribute("exception",ex);
         return "404Error";
     }
+
 
 
 

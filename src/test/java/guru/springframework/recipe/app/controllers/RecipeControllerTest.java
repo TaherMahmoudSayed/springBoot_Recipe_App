@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
@@ -29,19 +31,24 @@ class RecipeControllerTest {
     @Mock
     Model model;
     RecipeController recipeController;
+    MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         recipeController = new RecipeController(recipeService);
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
+                .setControllerAdvice(ExceptionHandlerController.class).build();
     }
 
     @Test
     void ShowRecipeMVC() throws Exception {
 
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
 
-        mockMvc.perform(get("/recipe/show/1"))
+        Mockito.when(recipeService.findById(anyLong())).thenReturn(Optional.of(recipe));
+        mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"));
 
@@ -51,6 +58,10 @@ class RecipeControllerTest {
     }
     @Test
     void ShowRecipe()  {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        Mockito.when(recipeService.findById(anyLong())).thenReturn(Optional.of(recipe));
         String pageName=recipeController.ShowRecipe(1L,model);
 
         Mockito.verify(recipeService, Mockito.times(1)).findById(Mockito.anyLong());
@@ -61,5 +72,11 @@ class RecipeControllerTest {
         long resipeId=1L;
         recipeController.DeleteRecipe(resipeId);
         Mockito.verify(recipeService).deleteById(anyLong());
+    }
+    @Test
+    void getRecipeWithStringIdReturnNumberFormatException() throws Exception {
+       mockMvc.perform(get("/recipe/asdf/show"))
+               .andExpect(status().isBadRequest())
+               .andExpect(view().name("400Error"));
     }
 }
