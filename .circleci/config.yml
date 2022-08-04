@@ -17,12 +17,6 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  - run:
-      name: Build the Jekyll site
-      command: bundle exec jekyll build --source jekyll --destination jekyll/_site/docs/
-  - store_artifacts:
-      path: jekyll/_site/docs/
-      destination: circleci-docs
 
 
 # Invoke jobs via workflows
