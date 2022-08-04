@@ -2,14 +2,16 @@ package guru.springframework.recipe.app.controllers;
 
 import guru.springframework.recipe.app.commands.RecipeCommand;
 import guru.springframework.recipe.app.domain.Recipe;
-import guru.springframework.recipe.app.exceptions.NotFoundException;
+
 import guru.springframework.recipe.app.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -50,10 +52,13 @@ public class RecipeController {
     }
     @PostMapping
     @RequestMapping("/save")
-    public String AddNewRecipePost(@ModelAttribute RecipeCommand command){
-        command = recipeService.saveRecipeCommand(command);
-        return "redirect:/recipe/"+command.getId()+"/show";
-
+    public String AddNewRecipePost(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult){
+        if (bindingResult.hasErrors())
+            return "recipe/recipeForm";
+        else {
+            command = recipeService.saveRecipeCommand(command);
+            return "redirect:/recipe/" + command.getId() + "/show";
+        }
     }
     @GetMapping
     @RequestMapping("/{id}/delete")
@@ -61,13 +66,7 @@ public class RecipeController {
         recipeService.deleteById(id);
         return "redirect:/";
     }
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NotFoundException.class)
-    public String HandleNotFoundEx(Exception ex,Model model){
-        log.error("handling not found exception");
-        model.addAttribute("exception",ex);
-        return "404Error";
-    }
+
 
 
 

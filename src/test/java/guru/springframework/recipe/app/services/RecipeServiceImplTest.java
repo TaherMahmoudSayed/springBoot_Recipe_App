@@ -3,7 +3,7 @@ package guru.springframework.recipe.app.services;
 import guru.springframework.recipe.app.converters.RecipeCommandToRecipe;
 import guru.springframework.recipe.app.converters.RecipeToRecipeCommand;
 import guru.springframework.recipe.app.domain.Recipe;
-import guru.springframework.recipe.app.exceptions.NotFoundException;
+
 import guru.springframework.recipe.app.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

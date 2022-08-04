@@ -60,9 +60,16 @@
 			<artifactId>bootstrap</artifactId>
 			<version>4.0.0-2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
 
 
-    </dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+
+	</dependencies>
 
 	<build>
 		<plugins>
