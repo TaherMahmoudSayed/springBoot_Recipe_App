@@ -20,13 +20,13 @@ public class ExceptionHandlerController {
     @ExceptionHandler(NumberFormatException.class)
     public String HandelBadRequestException(Exception ex, Model model){
         model.addAttribute("exception",ex);
-        return "400Error";
+        return "error/400";
     }
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(NotFoundException.class)
     public String HandleNotFoundEx(Exception ex,Model model){
         log.error("handling not found exception");
         model.addAttribute("exception",ex);
-        return "404Error";
+        return "error/404";
     }
 }
