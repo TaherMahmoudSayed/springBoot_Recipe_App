@@ -52,7 +52,7 @@ class RecipeServiceImplTest {
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
         Optional<Recipe> recipe1 =recipeService.findById(1L);
         assertNotNull(recipe1);
-        assertEquals(recipe,recipe1);
+        assertEquals(recipeOptional,recipe1);
         Mockito.verify(recipeRepository,Mockito.times(1)).findById(anyLong());
     }
 

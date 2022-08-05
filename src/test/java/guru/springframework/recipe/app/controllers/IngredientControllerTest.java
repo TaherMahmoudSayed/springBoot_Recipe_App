@@ -45,7 +45,10 @@ class IngredientControllerTest {
     }
     @Test
     void listIngredientsOfRecipeTest() throws Exception {
-
+        RecipeCommand recipeCommand=new RecipeCommand();
+        recipeCommand.setId(1L);
+        recipeCommand.getIngredients().add(new IngredientCommand());
+        when(recipeService.findRecipeCommandById(anyLong())).thenReturn(recipeCommand);
         mockMvc.perform(get("/recipe/1/ingredients"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/recipe/ingredient/list"))
